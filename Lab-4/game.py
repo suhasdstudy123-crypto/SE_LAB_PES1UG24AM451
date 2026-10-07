@@ -28,7 +28,6 @@ PLAYER_START = (11, 10)
 FRIGHT_SECONDS = 3.0
 PLAYER_STEP, GHOST_STEP = 0.14, 0.17
 
-
 FRIGHT_TINTS = {
     "blinky": (160, 90, 255),   # violet
     "pinky": (80, 220, 120),    # green
@@ -44,9 +43,15 @@ def ghost_color(name, mode):
     return None
 
 
+PELLET_MSG = {"text": None, "until": 0}
+PELLET_MSG_MS = 1500
+
+
 def on_pellet_eaten(score, pellets_left):
     """Called after every pellet is eaten; add sound, flashes, or bonus fruit here."""
-    pass
+    if pellets_left > 0 and pellets_left % 25 == 0:
+        PELLET_MSG["text"] = f"{pellets_left} pellets left!"
+        PELLET_MSG["until"] = pygame.time.get_ticks() + PELLET_MSG_MS
 
 
 def bonus_life_threshold():
@@ -252,6 +257,9 @@ class Game:
                 pygame.draw.circle(screen, (255, 255, 255), (gx + 4, gy - 4), 3)
         hud = font.render(f"Score {self.score}   Lives {self.lives}   R = reset", True, (240, 240, 240))
         screen.blit(hud, (8, ROWS * TILE + 6))
+        if PELLET_MSG["text"] and pygame.time.get_ticks() < PELLET_MSG["until"]:
+            msg = font.render(PELLET_MSG["text"], True, (255, 220, 120))
+            screen.blit(msg, msg.get_rect(topright=(W - 8, ROWS * TILE + 6)))
         if self.state != "play":
             text = "YOU WIN! Press R" if self.state == "win" else "GAME OVER - Press R"
             label = font.render(text, True, (255, 255, 120))
