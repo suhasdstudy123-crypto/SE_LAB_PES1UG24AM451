@@ -1,0 +1,10 @@
+Alumni Dinner is full, cannot add Meena
+No such event: Workshop
+Seats left at Tech Meetup: 1
+Seats left at Alumni Dinner: 0
+Tech Meetup guests: Asha, Ravi
+Tech Meetup is Upcoming
+Alumni Dinner is Completed
+Lucky draw winner: Asha
+Events restored from file: 2
+Venues: ['Hall A', 'Rooftop']
